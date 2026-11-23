@@ -9,14 +9,11 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import create_engine, select, or_
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 
-# Si DATABASE_URL está configurada se usa Supabase/PostgreSQL.
-# Sin ella, el proyecto funciona localmente con SQLite.
+
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./gamedex.db")
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
